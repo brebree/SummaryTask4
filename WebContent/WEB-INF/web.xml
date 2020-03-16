@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>SummaryTask4</display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>tempfile.dir</param-name>
+		<param-value>tmpfiles</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Controller</servlet-name>
+		<servlet-class>ua.nure.bieiaiev.SummaryTask4.web.controller.Controller</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Controller</servlet-name>
+		<url-pattern>/controller</url-pattern>
+	</servlet-mapping>
+
+
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>ua.nure.bieiaiev.SummaryTask4.web.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/WEB-INF/jsp/*</url-pattern>
+		<servlet-name>Controller</servlet-name>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>CommandAccessFilter</filter-name>
+		<filter-class>ua.nure.bieiaiev.SummaryTask4.web.filter.CommandAccessFilter</filter-class>
+		<init-param>
+			<param-name>admin</param-name>
+			<param-value>deleteAnswer deleteQuestion banUnban viewAllUsers viewCreateTest submitCreateTest viewEditTest submitEditTest removeTest</param-value>
+		</init-param>
+		<init-param>
+			<param-name>student</param-name>
+			<param-value>viewTestResult viewTestToPass submitPassTest viewUsersProfile</param-value>
+		</init-param>
+		<init-param>
+			<param-name>common</param-name>
+			<param-value>logout viewAllTests viewTestsBySubject incorrectCommand</param-value>
+		</init-param>
+		<init-param>
+			<param-name>out-of-control</param-name>
+			<param-value>submitRegister viewRegister login</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CommandAccessFilter</filter-name>
+		<servlet-name>Controller</servlet-name>
+	</filter-mapping>
+
+
+	<listener>
+		<listener-class>ua.nure.bieiaiev.SummaryTask4.web.listener.ContextListener</listener-class>
+	</listener>
+
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/jsp/error_page.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/error_page.jsp</location>
+	</error-page>
+</web-app>

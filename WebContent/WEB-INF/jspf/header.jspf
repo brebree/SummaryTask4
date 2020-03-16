@@ -1,0 +1,52 @@
+﻿<%@ page import="ua.nure.bieiaiev.SummaryTask4.entities.RoleEnum"%>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+
+<div id="top_bar_black">
+	<form id="language">
+		<c:forEach var="par" items="${param.keySet()}">
+			<c:if test="${par ne 'language'}">
+				<input type="hidden" name="${par}" value="${param[par]}">
+			</c:if>
+		</c:forEach>
+		<select id="language" name="language" onchange="submit()">
+			<option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+			<option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
+		</select>
+	</form>
+	<c:if test="${not empty user}">
+		<div id="nav_block">
+			<c:choose>
+				<c:when test="${userRole.name == 'admin' }">
+					<div class="nav_button">
+						<a href="controller?command=viewAllUsers"><fmt:message
+								key="header.a.allUsers" /></a> &nbsp;
+					</div>
+					<div class="nav_button">
+						<a href="controller?command=viewCreateTest"><fmt:message
+								key="header.a.createTest" /></a> &nbsp;
+					</div>
+				</c:when>
+				<c:when test="${userRole.name == 'student'}">
+					<div class="nav_button">
+						<a href="controller?command=viewUsersProfile"><fmt:message
+								key="header.a.myProfile" /></a> &nbsp;
+					</div>
+				</c:when>
+			</c:choose>
+			<div class="nav_button">
+				<a href="controller?command=viewAllTests"><fmt:message
+						key="header.a.viewAllTests" /></a> &nbsp;
+			</div>
+			<div class="nav_button">
+				<a href="controller?command=logout"><fmt:message
+						key="header.a.logout" /></a> &nbsp;
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${empty user and title ne 'Login'}">
+		<div class="nav_button">
+			<a href="login.jsp"><fmt:message key="login.legend.login" /></a>
+		</div>
+	</c:if>
+</div>
